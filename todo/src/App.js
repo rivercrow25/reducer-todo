@@ -1,24 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useReducer } from 'react';
+import TodoList from './components/TodoList'
+import { initialState, todoReducer } from './reducers/todoReducer'
 import './App.css';
 
 function App() {
+  const [state, dispatch] = useReducer(todoReducer, initialState)
+  const [task, setTask] = useState('')
+
+  const handleSubmit = event => {
+    event.preventDefault()
+    dispatch({
+      type: 'add', payload: {
+        title: task,
+        completed: false,
+        id: state.todoItems.length
+      }
+    })
+  }
+
+  const handleChange = event => {
+    setTask(event.target.value)
+  }
+
+  const toggle = (id) => {
+    dispatch({ type: 'toggle', payload: id })
+  }
+
+  const clear = () => {
+    dispatch({ type: 'clear' })
+  }
+  console.log(state)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={handleSubmit}>
+        <input name='addTasks' type='text' placeholder='Add a new task' onChange={handleChange} value={initialState.title} />
+        <button type='submit'> Add Task</button>
+        <button onClick={() => clear}>Clear Completed</button>
+      </form>
+      <TodoList tasks={state.todoItems} toggle={toggle} />
     </div>
   );
 }
