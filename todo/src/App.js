@@ -26,12 +26,11 @@ function App() {
     dispatch({ type: 'toggle', payload: id })
   }
 
-
   console.log(task)
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
-        <input name='addTasks' type='text' placeholder='Add a new task' onChange={handleChange} value={task} />
+        <input name='addTasks' type='text' placeholder='Add a new task' onChange={handleChange} />
         <button type='submit'> Add Task</button>
         <button type='button' onClick={() => dispatch({ type: 'clear' })}>Clear Completed</button>
       </form>
