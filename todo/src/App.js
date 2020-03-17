@@ -26,16 +26,14 @@ function App() {
     dispatch({ type: 'toggle', payload: id })
   }
 
-  const clear = () => {
-    dispatch({ type: 'clear' })
-  }
-  console.log(state)
+
+  console.log(task)
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
-        <input name='addTasks' type='text' placeholder='Add a new task' onChange={handleChange} value={initialState.title} />
+        <input name='addTasks' type='text' placeholder='Add a new task' onChange={handleChange} value={task} />
         <button type='submit'> Add Task</button>
-        <button onClick={() => clear}>Clear Completed</button>
+        <button type='button' onClick={() => dispatch({ type: 'clear' })}>Clear Completed</button>
       </form>
       <TodoList tasks={state.todoItems} toggle={toggle} />
     </div>
